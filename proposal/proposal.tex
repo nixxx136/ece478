@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+%
+%Margin - 1 inch on all sides
+%
+\usepackage[letterpaper]{geometry}
+\geometry{top=1.0in, bottom=1.0in, left=1.0in, right=1.0in}
+
+%
+%Doublespacing
+%
+\usepackage{setspace}
+\doublespacing
+%Setting the font
+\usepackage{times}
+%Rotating tables (e.g. sideways when too long)
+\usepackage{rotating}
+%For multiple rows in tables
+\usepackage{multirow}
+%url references
+\usepackage{url}
+
+\setlength\headsep{0.333in}
+%
+%Works cited environment
+%(to start, use \begin{sources...}, each entry preceded by \bibent)
+% - from Ryan Alcock's MLA style file
+%
+\newcommand{\bibent}{\noindent \hangindent 40pt}
+\newenvironment{sources}{}{}
+
+%
+%Begin document
+%
+\begin{document}
+\begin{flushleft}
+%%%%First page name, class, etc
+
+Jordan Bayles\\
+Mike Rosulek\\
+ECE 478: Network Security\\
+\today\\
+
+%%%%Changes paragraph indentation to 0.5in
+\setlength{\parindent}{0.5in}
+%%%%Begin body of paper here
+
+\section{Group members}
+\begin{itemize}
+	\item Jordan Bayles
+	\item John Zeller
+\end{itemize}
+
+\section{Project Proposal}
+Due to both of having a desire to learn more about WEP/WPA wifi
+protocols and their vulnerabilities, our project proposal is
+to compare and contrast the vulnerabilities present in these
+protocols, potentially in a chronological fashion. We will focus
+primarily on the different exploits for WEP, WPA, and WPA2 and
+potentially go into more detail about AES and TKIP, as well
+as more exotic stuff like WPA RADIUS.
+
+\section{Sources to use}
+%%%%Works cited
+\begin{sources}
+\bibent
+Lashkari, A.H.; Danesh, M.M.S.; Samadi, B., "A survey on wireless security protocols (WEP, WPA and WPA2/802.11i)," Computer Science and Information Technology, 2009. ICCSIT 2009. 2nd IEEE International Conference on , vol., no., pp.48,52, 8-11 Aug. 2009
+doi: 10.1109/ICCSIT.2009.5234856
+\\\textbf{URL:} \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5234856&isnumber=5234374}
+
+\bibent
+Majstor, F., "WLAN security threats \& solutions," Local Computer Networks, 2003. LCN '03. Proceedings. 28th Annual IEEE International Conference on , vol., no., pp.650,, 20-24 Oct. 2003
+doi: 10.1109/LCN.2003.1243197
+\\\textbf{URL:} \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1243197&isnumber=27859}
+
+\bibent
+Wang Shunman; Tao Ran; Wang Yue; Zhang Ji, "WLAN and it's security problems," Parallel and Distributed Computing, Applications and Technologies, 2003. PDCAT'2003. Proceedings of the Fourth International Conference on , vol., no., pp.241,244, 27-29 Aug. 2003
+doi: 10.1109/PDCAT.2003.1236297
+\\\textbf{URL:} \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1236297&isnumber=27719}
+
+\end{sources}
+\end{flushleft}
+\end{document}

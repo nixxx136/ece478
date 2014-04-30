@@ -1,0 +1,5 @@
+[('uname', 'pw', 'realname'),
+ ('admin', '0ff13b80f2ed3b89e11ad0a1020d7859', 'Mike Rosulek'),
+ ('arnold', 'b9318e2c5b8ae9cb6910825f095dec2c', 'Arnold J Rimmer'),
+ ('dave', '58910ed1dcf0e263b180c44f33c2b714', 'Dave Lister'),
+ ('kryten', '4fb3eb037a1053a7efc802686329f03d', 'Kryten 2X4B 523P')]

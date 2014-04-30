@@ -1,0 +1,22 @@
+--- src.perl	2014-04-18 07:07:42.571260397 -0700
++++ bugfix.perl	2014-04-18 07:08:30.041258655 -0700
+@@ -32,16 +32,16 @@ my $db_handle = DBI->connect( "dbi:SQLit
+     or err $DBI::errstr;
+ 
+ ## these are the form data sent by the web browser in the GET/POST request:
+-my $U = param("u"); 
++my $U = param("u");
+ my $P = param("p");
+ 
+ ## form was submitted: verify login
+ if ($U) {
+ 
+-    my $sql = "select * from users where uname='$U' and pwd='$P'";
++    my $sql = "select * from users where uname=? and pwd=?";
+     my $statement = $db_handle->prepare($sql)
+         or err "Can't prepare SQL statement: $DBI::errstr";
+-    $statement->execute()
++    $statement->execute($U, $P)
+         or err "Can't execute SQL statement: $DBI::errstr";
+     my ($first_column) = $statement->fetchrow();
+ 

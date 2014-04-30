@@ -1,0 +1,265 @@
+\documentclass[12pt,letterpaper]{article}
+
+\author{Jordan Bayles}
+\title{Homework 3\\
+\small ECE 478: Network Security}
+
+%\date{}
+
+%%Usepackage declarations
+\usepackage[left=1in,top=1in,right=1in,bottom=1in]{geometry}
+\usepackage{lastpage}
+\usepackage{sectsty}
+\usepackage{slashed}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+% Include for easy import of full pdf pages
+\usepackage{pdfpages}
+% Include for use of images
+\usepackage{graphicx}
+% Include for use of [H] placement specifier
+\usepackage{float}
+% Include for use of \toprule, \midrule, \bottomrule in tabular env.
+\usepackage{booktabs}
+% Include for setting spacing between lines
+\usepackage{setspace}
+% Code listing packages
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage[hyphens]{url}
+
+%% Package usages
+\sectionfont{\normalsize}
+\subsectionfont{\small}
+
+%% New commands
+\newcommand{\comment}[1]{}
+\newcommand{\field}[1]{\mathbb{#1}} % requires amsfonts
+\newcommand{\script}[1]{\mathcal{#1}} % requires amsfonts
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+
+%% Access document variables
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+%% Color Definitions
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{lightgrey}{gray}{0.8}
+\definecolor{darkgrey}{gray}{1.6}
+
+%% Code Listing Configuration
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{0.987\linewidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing, labelfont=white, indention=0pt, textfont=white, margin=0pt, font={bf,footnotesize}, singlelinecheck=false}
+\DeclareCaptionFont{white}{\color{white}}
+\renewcommand{\lstlistingname}{Code}
+\lstset{ %
+  %Some lang opts: C++, C, Java, Python, Matlab, TeX, HTML, SQL, Verilog, VHDL, make, ...
+  basicstyle=\footnotesize\ttfamily , % the size of the fonts that are used for the code
+  numbers=left,                       % where to put the line-numbers
+  numberstyle=\scriptsize\color{darkgray}, % the style that is used for the line-numbers
+  stepnumber=2,                       % the step between two line-numbers. 
+  numbersep=5pt,                      % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,                   % show spaces adding particular underscores
+  showstringspaces=false,             % underline spaces within strings
+  showtabs=false,                     % show tabs within strings adding particular underscores
+  frame=tb,                           % adds a frame around the code
+  rulesepcolor=\color{gray},          % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                          % sets default tabsize to 2 spaces
+  captionpos=t,                       % sets the caption-position
+  breaklines=true,                    % sets automatic line breaking
+  breakatwhitespace=false,            % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                     % show the filename of files included with \lstinputlisting;
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve},          % string literal style
+  escapeinside={\%*}{*)},             % if you want to add a comment within your code
+  morekeywords={*,...}                % if you want to add more keywords to the set
+  framexbottommargin=5pt,
+}
+
+\begin{document}
+\begin{flushright}
+\theauthor\\
+\thedate
+\end{flushright}
+\begin{center}
+\thetitle
+\end{center}
+
+\section*{0. Disclaimer}
+\emph{This submission reflects my own understanding of the homework and
+solutions. All of the ideas are my own, unless I explicitly acknowledge otherwise.}
+
+\section*{1. The secret name of the cookie}
+This page sets a cookie upon new account creation called
+\textbf{ecbhw}.
+
+\begin{verbatim}
+    $cookie = CGI::Cookie->new(
+        -name  => "ecbhw",
+        -value => encode_base64(encrypt($data))
+    );
+\end{verbatim}
+
+\section{2. What must a token for the admin user contain?}
+The script uses the cookie to check authorization, and splits
+up the base64 cookie value into three sections:
+\begin{enumerate}
+\item ``ok'' - did we decode correctly?
+\item ``timestamp'' - account creation time
+\item ``username'' - what is the account username?
+\end{enumerate}
+
+\begin{verbatim}
+if ($cookie && $cookie->value) {
+    my $dat = decrypt(decode_base64($cookie->value));
+    my ($ok, $timestamp, $username) = split /\|/, $dat;
+    if ($ok eq "ok") {
+        $AUTHORIZED = $username;
+        my $t = localtime($timestamp);
+        msg "Welcome back, $username (member since $t)";
+    } else {
+        msg "Invalid authentication cookie detected";
+    }
+\end{verbatim}
+
+\section*{3. Manual verification of use of ECB}
+You would have to manually modify the cookie and see how the resulting
+value is decoded. For example, I created a cookie with username \textbf{metatron}. The login page is thus this:
+
+\begin{verbatim}
+Info: Welcome back, metatron (member since Wed Apr 23 07:15:49 2014)
+\end{verbatim}
+
+With this cookie currently set to the following content value:
+
+\begin{verbatim}
+qLIsoB4lE%2FacKIMVqXvlmw9s%2Fw0cRcV%2B7Oxx8e%2BolY8%3D%0A
+\end{verbatim}
+
+We can modify the content in an area that is presumably the username:
+
+\begin{verbatim}
+qLIsoB4lE%2FacKIMVqXvlmw6s%2Fw0cRcV%2B7Oxx8e%2BolY8%3D%0A
+\end{verbatim}
+
+And it turns out it is bizarrely easy to make modifications to the
+cookie without affecting the resulting output, like this example
+
+\begin{verbatim}
+qLIsoB4lE%2FacKIMVqXvlmw9s%2Fw0cRcV%2A%2C%2B%2A7Oxx8e%2BolY8
+\end{verbatim}
+
+and even easier to get a bad decryption:
+
+\begin{verbatim}
+bad decrypt 140286217791304:error:06065064:digital envelope
+routines:EVP_DecryptFinal_ex:bad decrypt:evp_enc.c:596:
+
+Info: Welcome back, me (member since Wed Apr 23 07:15:49 2014)
+\end{verbatim}
+
+The HTML encoding used to represent the cookie content in this example
+makes it extremely difficult to get a working modification.
+This example results in a modified user name:
+
+\begin{verbatim}
+qLIsoB4lE%2F%2AacKIMVqXvlmw9s%2Fw0cRcV%2F%2C%2B7Oxx8e%2BolY8
+\end{verbatim}
+
+Although it really isn't what we are after either.
+
+\begin{verbatim}
+bad decrypt 140703959312200:error:0606506D:digital envelope
+routines:EVP_DecryptFinal_ex:wrong final block length:evp_enc.c:589:
+
+Info: Welcome back, mežWZQ:nAsŸ‚7ŒŸm6i (member since Wed Apr 23 07:15:49 2014)
+
+\end{verbatim}
+
+On the plus side, this error does tell us the server is using OpenSSL at least.
+
+\section*{4. Block length?}
+It is difficult to tell the block length from part 3, but it is likely
+a 32 bit block (4 ASCII characters), as the dissimilar portion in my attempts
+to solve is 22, meaning it's not a 64 bit block.
+
+\begin{verbatim}
+aaaaaaaaaaaaaaabaaaaaaaaaaaaa 
+IpdkZbQ21zpl%2BcTuK4LwV04wrzlBaDIzrNZLfdvqatcxR60eGLT8AB2%2Bbqrb%2F3Ay%0A
+ 9yeCyPYO8sQPrG5XG2m09k4wrzlBaDIzrNZLfdvqatcxR60eGLT8AB2%2Bbqrb%2F3Ay%0A
+
+Dissimilar portion (timestamp + error check)
+len(9yeCyPYO8sQPrG5XG2m09k) = 22 characters
+Similar portion (username)
+4wrzlBaDIzrNZLfdvqatcxR60eGLT8AB2%2Bbqrb%2F3Ay%0A
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaa 
+m%2FALEoX8P3yeQ7tqDXWGRrTGxF5pBZUDA1Zhe0nGotIxR60eGLT8AB2%2Bbqrb%2F3Ay%0A
+\end{verbatim}
+
+Judging by the attempts in section (6), the blocks are a size
+that is a factor of both 22 and
+\section*{5. What parts can you control?}
+You can control the username portion of the token data, as the time
+is set on the server side and the authentication portion must
+remain unchanged.
+
+\section*{6. Encrypted blocks for the admin token}
+You can't have a username start with ``admin,'' however you can
+get partial blocks for the admin token, by having a username be
+``ad(junk)'' and another username being ``(junk 2)min.''
+
+\begin{verbatim}
+admia
+KgjljG6nHbNqmd9jZT9DU8an7r7UdMs2U6Jpupi1gb0%3D%0A
+admib
+kduH7RIaHWtwrLMMZItmLlahAjClu6XQUcqneXZOVD0%3D%0A
+admic
+91G3ncOvwMGRzaGLWD5BzVx2iqMk%2BvEoKBClkTw5mug%3D%0A
+admid
+8L9oPg8A2lmvX6lWlzW5bA7XmaKTUgKvcI3WyXmZqDQ%3D%0A
+
+bdmin
+nQyk1IaVSnF1uxMndw4wv9d0u2qIbHUsko8Rf9tMues%3D%0A
+cdmin
+%2FrQUOX77Dt39OhxkwnyD2Nd0u2qIbHUsko8Rf9tMues%3D%0A
+ddmin
+SdTBw37M%2FJsPjMpWGnKNANd0u2qIbHUsko8Rf9tMues%3D%0A
+
+SIMILAR *dmin:
+**********************d0u2qIbHUsko8Rf9tMues%3D%0A
+\end{verbatim}
+
+The block length is necessary to know which pieces you need to grab and
+set to ensure you modify the blocks you properly need to.
+
+\section*{7. Cookie token use to get an admin token}
+You can synthesize parts of the cookie containing partial admin tokens--you are
+not allowed to create an account starting with admin--in order to create a single
+cookie containing a functioning admin cookie. Because the encryption mode is
+set to electronic codebook mode, the plaintext in each block is subject to the
+same encryption schema (assuming same key), meaning that the position in the block
+chain that each piece is subject to is more important than they are together (such
+as username \verb~1admin~, which offsets the encryption and cannot help find the
+proper token.
+
+\section*{8. Javascript set cookie}
+You can set a cookie in javascript by editing \verb~document.cookie~:
+
+\begin{verbatim}
+document.cookie='ecbhw=<new value>'
+\end{verbatim}
+
+\section*{9. Secret admin message}
+
+\end{document}
