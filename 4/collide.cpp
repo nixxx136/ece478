@@ -20,7 +20,7 @@ using namespace std;
 class CollisionFinder
 {
 public:
-	CollisionFinder(string post, string collide, int max);
+	CollisionFinder(string timestamp, string collide, int max);
 	string find_collision();
 
 	static const string m_valid_chars;
@@ -28,7 +28,7 @@ private:
 
 	map<string, string> m_precalc;  // saved hash results
 
-	string m_postfix;               // rest of input string (timestamp)
+	string m_timestamp;               // rest of input string (timestamp)
 	string m_collide_hash;          // Hash to collide with
 
 	int    m_max_len;               // Max length of username to try
@@ -40,8 +40,8 @@ private:
 
 const string CollisionFinder::m_valid_chars = "abcdefghijklmnopqrstuvwxyz";
 
-CollisionFinder::CollisionFinder(string post, string collide, int max)
-: m_postfix(post), m_collide_hash(collide), m_max_len(max)
+CollisionFinder::CollisionFinder(string timestamp, string collide, int max)
+: m_timestamp(timestamp), m_collide_hash(collide), m_max_len(max)
 {
 	m_truncate = m_collide_hash.length();
 }
@@ -49,7 +49,7 @@ CollisionFinder::CollisionFinder(string post, string collide, int max)
 string CollisionFinder::find_collision()
 {
 	string username;
-	string input = username + m_postfix;
+	string input = username + m_timestamp;
 	string output;
 
 	byte digest[CryptoPP::Weak::MD5::DIGESTSIZE];
@@ -58,7 +58,7 @@ string CollisionFinder::find_collision()
 		for (auto j = m_valid_chars.begin(); j != m_valid_chars.end(); ++j) {
 
 			// calculate the hash
-#ifdef MULTIPLE_RUNS
+#ifdef SAVE_RESULTS
 			if (m_precalc.find(username) == m_precalc.end()) {
 #endif
 				m_hash.CalculateDigest(digest,
@@ -74,7 +74,8 @@ string CollisionFinder::find_collision()
 				// truncate the hash!
 				output.erase(m_truncate, string::npos);
 
-#ifdef MULTIPLE_RUNS
+#ifdef SAVE_RESULTS
+				m_precalc[username] = output;
 			} else {
 				output = m_precalc.find(username);
 			}
