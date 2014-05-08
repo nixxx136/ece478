@@ -1,0 +1,108 @@
+\documentclass[12pt,letterpaper]{article}
+
+\author{Jordan Bayles\\
+John Zeller}
+\title{Outline\\
+\small ECE 478: Network Security}
+
+%\date{}
+
+%%Usepackage declarations
+\usepackage[left=1in,top=1in,right=1in,bottom=1in]{geometry}
+\usepackage{lastpage}
+\usepackage{sectsty}
+\usepackage{slashed}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+% Include for easy import of full pdf pages
+\usepackage{pdfpages}
+% Include for use of images
+\usepackage{graphicx}
+% Include for use of [H] placement specifier
+\usepackage{float}
+% Include for use of \toprule, \midrule, \bottomrule in tabular env.
+\usepackage{booktabs}
+% Include for setting spacing between lines
+\usepackage{setspace}
+% Code listing packages
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage{outlines}
+
+%% Package usages
+\sectionfont{\normalsize}
+\subsectionfont{\small}
+
+%% New commands
+\newcommand{\comment}[1]{}
+\newcommand{\field}[1]{\mathbb{#1}} % requires amsfonts
+\newcommand{\script}[1]{\mathcal{#1}} % requires amsfonts
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+
+%% Access document variables
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\begin{document}
+\begin{flushright}
+\theauthor\\
+\thedate
+\end{flushright}
+\begin{center}
+\thetitle
+\end{center}
+
+\section{1-page outline of project writeup}
+\begin{outline}
+\1 Motivation - WEP was introduced in 1999 to provide confidentiality for WiFi similar to wired networks
+\1 WEP Protocol breakdown
+    \2 Infographic diagram showing WEP protocol makeup--to be created by us--and how it fits in the wireless stack
+    \2 WEP-40
+    \2 WEP-104
+    \2 WEP-232
+\1 WEP weaknesses
+    \2 Repeat IVs after a small amount of packets
+    \2 Single shared key among users
+\1 Our implemented attacks
+    \2 RC4 stream cipher attack to recover key
+        \3 Sample file of saved packets
+        \3 Overview of aircrack-ng script package - commands and what they do
+        \3 Results of the attack - recovered key and analysis of the amount of effort required
+    \2 802.11 protocol attack
+        \3 theoretical basis for the protocol attack
+        \3 Graphic showing the elements of 802.11 that are exploited
+\1 Remedies for WEP issues
+    \2 Upgrade - 802.11i (WPA or WPA2)
+    \2 Wepplus - private commercial solution
+    \2 DynamicWEP - changes keys dynamically
+\1 Conclusion
+\end{outline}
+
+
+\newpage
+\section{1-page outline of presentation}
+\begin{outline}
+\1 Introduction
+     \2 IEEE 802.11 Standard for WEP
+     \2 WPA supercedes WEP
+     \2 WEP-40 and WEP-104 deprecated with 802.11i standard (ie WPA2)
+\1 WEP Protocol breakdown (unchanged from writeup)
+\1 WEP weaknesses (unchanged from writeup)
+\1 Our implemented attacks - will be expanded upon from writeup to include more practical, hands on approach to cracking WEP. It’s a trivial protocol to crack so will be a easy way to include the audience
+    \2 RC4 stream cipher attack to recover key
+        \3 LIVE DEMO of stream cipher attack,using a basic Linksys router in class. WEP-40 is easy enough to crack it should be easy to include it in our presentation. This crack will be done the same way as in the writeup, and depending on the expected time we will either dedicate a portion of our presentation to cracking it, or have it cracked in the background (collecting and analyze packets)
+    \2 802.11 protocol attack
+        \3 LIVE DEMO of protocol attack if possible, otherwise screenshots of relevant portions of the cracking process as well as taking a look at related file/code snippets will be included in the presentation
+
+\1 Remedies for WEP issues (unchanged from writeup)
+\1 Conclusion
+
+\end{outline}
+
+\end{document}
