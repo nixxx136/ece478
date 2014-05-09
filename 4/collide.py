@@ -1,14 +1,11 @@
 #!/usr/bin/env python
-# All work authored by Jordan Bayles
-# Written for ECE 478: Network Security
-# All rights reserved
 
 import hashlib
 import sys
 
 valid_chars = "abcdefghijklmnopqrstuvwyxz"
 valid_ints = "0123456789"
-truncate = 4 * 2 # characters
+truncate = 5 # characters
 
 def generate_fields(element_list, max_len):
     li = list(element_list)
@@ -34,13 +31,13 @@ def generate_hashes(hhmm, max_len):
     user_hashes = [None]*len(usernames)
     for index, value in enumerate(usernames):
         data = value + "." + user_timestamp
-        user_hashes[index] = hashlib.md5(data.encode('utf-8')).hexdigest()[:truncate]
+        user_hashes[index] = hashlib.md5(data.encode('utf-8')).hexdigest()[:truncate * 2]
 
     # generate the hashes with username=admin
     admin_hashes = [None]*len(timestamps)
     for index, value in enumerate(timestamps):
         data = "admin." + value
-        admin_hashes[index] = hashlib.md5(data.encode('utf-8')).hexdigest()[:truncate]
+        admin_hashes[index] = hashlib.md5(data.encode('utf-8')).hexdigest()[:truncate * 2]
 
     return usernames, timestamps, user_hashes, admin_hashes
 
@@ -58,6 +55,7 @@ def find_collisions(hhmm, max_len):
     return None
 
 def main():
+    print("MD5trunc clipping to", truncate)
     find_collisions(sys.argv[1], int(sys.argv[2]))
     return 0
 

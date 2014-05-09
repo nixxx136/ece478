@@ -133,7 +133,9 @@ instead of a second preimage, it makes the attack only $2^{n/2}$ in complexity.
 
 It is important to note that we do NOT control the timestamp... it is a server
 side variable. Thus we have two options for finding collsions: use a known
-timestamp that occurs in the future
+timestamp that occurs in the future (annoying, but what I chose to do), or
+pregenerate a ton of MACs with known timestamps to make results less time
+dependent (great for me, not so great for not hammering the server...)
 
 \section*{5. MD5trunc collision and approach}
 I found a collision using my python script, written to utilize the birthday
@@ -165,6 +167,21 @@ refresh resulted in the admin message:
 \end{verse}
 
 \section*{7. Extension to different truncation lengths}
+This type of attack is very sensitive to the length of the truncation utilized,
+as it becomes increasingly difficult to match longer sections of the hash
+sum. For example, using timestamps and usernames of both length $[1,4]$ results
+in many instances of no collisions for a truncation of length 5, whereas
+it has a very high probability of working for truncation of length 4. This set
+of usernames, timestamps is quite large, resulting in
+$26^4 * 10^4 = 4,569,760,000$ pairwise comparisons (using a linear traversal
+on a finite array). For a length 5 truncation, to have a reliable chance of
+success, we need to use timestamps and usernames of length 5 or more.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=5in]{complexity.png}
+\caption{Number of hashes needed to generate a collision}
+\end{figure}
 
 \section*{Appendix}
 \subsection{Collision finding script}
