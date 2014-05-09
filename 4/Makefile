@@ -16,7 +16,7 @@ INCLUDES =
 SOURCE = collide.cpp
 
 #default is to compile and pdf
-default: pdf compile
+default: pdf
 both: pdf html
 
 #depends on all of you source and header files
@@ -37,8 +37,13 @@ dvi: ${TEXTARGET}.tex
 ps: dvi
 	dvips -R -Poutline -t letter ${TEXTARGET}.dvi -o ${TEXTARGET}.ps
 
-pdf: ps
-	ps2pdf ${TEXTARGET}.ps
+pdf:
+	pdflatex ${TEXTARGET}.tex
+	#bibtex ${TEXTARGET}
+	pdflatex ${TEXTARGET}.tex
+
+#pdf: ps
+#	ps2pdf ${TEXTARGET}.ps
 
 
 html:

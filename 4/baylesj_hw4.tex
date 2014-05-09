@@ -122,6 +122,7 @@ doesn't really matter in and of itself.
 We know that the username must be admin, and we know that the mac must match
 admin plus some timestamp, and must use the secret key only known to the server.
 Thus, we must create a collision between \verb~admin.<some timestamp>~ and
+
 \verb~ <some username != admin>.<some predicted or known timestamp>~. We can
 make it a birthday attack instead of a brute force attack by using a list of
 alternative usernames with known hashes, then calculating the MD5trunc of each
@@ -133,10 +134,40 @@ instead of a second preimage, it makes the attack only $2^{n/2}$ in complexity.
 It is important to note that we do NOT control the timestamp... it is a server
 side variable. Thus we have two options for finding collsions: use a known
 timestamp that occurs in the future
+
 \section*{5. MD5trunc collision and approach}
+I found a collision using my python script, written to utilize the birthday
+problem. Using a timestamp of \verb~090520140313~ and a maximum length of 4
+for both the username and admin timestamp, I found that the following
+values collide:
+\begin{verbatim}
+admin.1044        - 9bb5b59c8419244da574199300324198
+
+fkkc.090520140313 - 9bb5b59c3433b0de8013e70d848ab799
+
+Resulting MAC: cabe6ac811eb07a59e7cb30fd4597009
+\end{verbatim}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=5in]{admin4.png}
+\end{figure}
 
 \section*{6. Mechanics of the final attack}
+The final attack used the collision above: at 03:13AM on May 9th, 2014, I created
+a user with the username \verb~fkkc~ on the server. This created a cookie
+with the MAC called ``Resulting MAC'' above, which I then modified to hold
+the value \verb~admin.1044.cabe6ac811eb07a59e7cb30fd4597009~. A quick page
+refresh resulted in the admin message:
+
+\begin{verse}
+"If you think education is expensive, try ignorance" --Derek Bok 
+\end{verse}
 
 \section*{7. Extension to different truncation lengths}
+
+\section*{Appendix}
+\subsection{Collision finding script}
+\lstinputlisting[language=Python]{collide.py}
 
 \end{document}

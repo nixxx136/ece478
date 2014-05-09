@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# All work authored by Jordan Bayles
+# Written for ECE 478: Network Security
+# All rights reserved
 
 import hashlib
 import sys
