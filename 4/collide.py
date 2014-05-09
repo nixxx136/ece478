@@ -1,10 +1,11 @@
-#/usr/bin/env python
+#!/usr/bin/env python
 
 import hashlib
+import sys
 
 valid_chars = "abcdefghijklmnopqrstuvwyxz"
 valid_ints = "0123456789"
-truncate = 8 # characters
+truncate = 4 * 2 # characters
 
 def generate_fields(element_list, max_len):
     li = list(element_list)
@@ -21,7 +22,7 @@ def generate_fields(element_list, max_len):
 def generate_hashes(hhmm, max_len):
 
     # timestamp format DDMMYYYYHHmm
-    user_timestamp = "08052014" + hhmm
+    user_timestamp = "09052014" + hhmm
 
     usernames = generate_fields(valid_chars, max_len)
     timestamps = generate_fields(valid_ints, max_len)
@@ -54,7 +55,8 @@ def find_collisions(hhmm, max_len):
     return None
 
 def main():
+    find_collisions(sys.argv[1], int(sys.argv[2]))
+    return 0
 
-
-if __name__="__main__":
+if __name__ == "__main__":
     main()
