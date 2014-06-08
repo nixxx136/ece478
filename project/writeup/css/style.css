@@ -466,19 +466,36 @@
 			box-shadow: 0 0.05em 0.15em 0 rgba(0,0,0,0.05);
 			margin-bottom: 40px;
 		}
-		
-			.item header
-			{
-				background: #fff;
-				margin: 0;
-				padding: 1em 0 1em 0;
-				font-size: 0.8em;
-			}
 
-				.item header h3
-				{
-					font-size: 1em;
-				}
+		.item header
+		{
+			background: #fff;
+			margin: 0;
+			padding: 1em 0 1em 0;
+			font-size: 0.8em;
+		}
+
+		.item header h3
+		{
+			font-size: 1em;
+		}
+
+/*********************************************************************************/
+/* Prism code stuff
+/*********************************************************************************/
+code, pre {
+	font-family: Consolas, Monaco, 'Andale Mono', 'Lucida Console', monospace;
+	hyphens: none;
+}
+
+pre {
+	max-height: 20em;
+}
+
+pre > code.highlight {
+	outline: .4em solid red;
+	outline-offset: .4em;
+}
 
 /*********************************************************************************/
 /* Icons                                                                         */
