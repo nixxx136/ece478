@@ -111,21 +111,22 @@
 								<h2>Background</h2>
 							</header>
 
-							Wired Equivalent Privacy (WEP) was introduced in September 1999
+							<p>Wired Equivalent Privacy (WEP) was introduced in September 1999
 							as a part of the original IEEE 802.11 standard. The purpose
 							of WEP was to provide data confidentiality similar to existing
 							wired networks.
 
 							<h3>WEP-x origins</h3>
 
-							The original standard was WEP-40; due to US government export
+							<p>The original standard was WEP-40; due to US government export
 							restrictions on cryptographic technology, the key size
 							was limited to 40-bits in the standard 64-bit WEP. In 2000, the
 							US government export restrictions were lifted and WEP-104, a
 							128-bit system, was introduced by hardware manufacturers.
 
 							<h3> Superceding of WEP </h3>
-							In 2003, the Wi-Fi Alliance announced that WEP had been superceded
+
+							<p>In 2003, the Wi-Fi Alliance announced that WEP had been superceded
 							by Wi-Fi Protected Access (WPA). In 2004, IEEE 802.11i introduced
 							WPA2 and deprecated both WEP-40 and WEP-104, stating that they
 							"fail to meet their security goals."
@@ -151,6 +152,7 @@
 							<header>
 								<h2>Exploits</h2>
 							</header>
+
 							<p>There are several attack vectors for WEP. Because it is based
 							on an RC4 stream cipher, the same traffic key cannot be reused
 							securely. The cipher is seeded with an IV--transmitted as plain
@@ -174,6 +176,7 @@
 							needs to be eavesdropped before bootstrapping to arbitrary data.
 
 							<h3>RC4 based exploits</h3>
+
 							<p>Most exploits are based on the RC4 stream itself. Fluhrer,
 							Mantin and Shamir (FMS) found correlations between the RC4
 							keystream, IV, and shared key allowing a passive, eavesdropping
@@ -196,14 +199,101 @@
 							95% probability with only 95,000 packets.
 
 							<h3>aircrack-ng suite</h3>
+							Aircrack-ng is a WEP and WPA-PSK cracking suite that enables
+							users to collect packets from a server and perform analysis to
+							recover keys from stored packets. It is one of the fastest
+							free, consumer WEP cracking tools, implementing the FMS attack
+							mentioned above, albeit with optimizations including KoreK, and
+							the PTW attack. Aircrack-ng is used by many security companies
+							to audit wireless networks.
+
+							<p>At its simplest, aircrack-ng is intuitive and simply for power
+							users. Assuming you are close enough to the access point to
+							transmit and receive packets, the network has at least one
+							client attached, your drivers are properly set up for injection,
+							and you are using a current version of aircrack-ng, the
+							process is simple to crack WEP. We will discuss the tool
+							by walking through the process of cracking a simple WEP-40
+							connection.
+
+<h4>airmon-ng</h4>
+<p>The first step is to set the wireless card into monitor mode
+on the channel of the AP you want to crack. Typically this
+is 6 if you are war driving, though you can check the channel
+of a particular network easily. First you must put down the
+network card with</p>
+<pre class="prettyprint linenums">
+airmon-ng stop (network interface)
+</pre>
+
+<p>Then you place the wireless card into monitor mode with
+<pre class="prettyprint linenums">
+airmon-ng start (network interface) (AP channel)
+</pre>
+
+<h4>airodump-ng</h4>
+<p>After the wireless card is prepared to monitor packets, you can
+start monitoring packets over the connection using airodump-ng.
+The syntax is
+<pre class="prettyprint linenums">
+airodump-ng -c (AP channel) --bssid (BSSID of AP) -w (output filename) (network interface)
+</pre>
+
+Airodump in progress
+<span class="image centered"><img src="images/aircrack/airodump_working.png" alt=""></img></span>
+
+<h4>aireplay-ng</h4>
+<p>After monitoring has started, packets are being collected. Given enough time
+this will likely be enough to collected sufficient packets for recovering the
+key, however this is not necessary. Typically while cracking you want to
+use aireplay-ng to get a fake authentication, which allows the hacking
+laptop to associate with the desired AP and have it accept packets. This gives
+more response packets from the server and allows for packet injection.
 
 <pre class="prettyprint linenums">
-@import url(http://fonts.googleapis.com/css?family=Questrial);
-
-@import url(http://fonts.googleapis.com/css?family=Arvo);
-@font-face { src: url(http://lea.verou.me/logo.otf);
-font-family: 'LeaVerou'; }
+aireplay-ng -1 0 -e (ESSID of AP) -a (BSSID of AP) -h (MAC of network interface) (network interface)
 </pre>
+
+<p>After we have fake associated, everything is ready to begin packet injection.
+The easiest way to do this is when a client is currently on the access point,
+meaning that address resolution protocol (ARP) requests are being sent
+out from the server. ARP packets are ideal because the AP typically broadcasts
+them to build the ARP request result, simultaneously spawning a new IV for
+collection. We wait for ARP requests to come across the monitor, and then
+when we find one we inject it for more packets. There are also tricks for
+generating ARPs without a client present, but if conditions are met you
+can starting injecting using
+<pre class="prettyprint linenums">
+aireplay-ng -3 -b (BSSID of AP) -h (MAC of network interface) (network interface)
+</pre>
+
+<h4>aircrack-ng</h4>
+<p>After collecting enough IVs ("enough" depends on your attack strategy, but
+typically 50,000 may be enough) we can now obtain the WEP key directly. This
+is done using FMS or PTW implicitly through the aircrack-ng command. For
+PTW:
+<pre class="prettyprint linenums">
+aircrack-ng -b (BSSID of AP) (output filename)*.cap
+</pre>
+
+<p>To use the FMS/KoreK method, you can start another console session and use
+<pre class="prettyprint linenums">
+aircrack-ng -K -b (BSSID of AP) (output filename)*.cap
+</pre>
+
+<p>Aircrack with FMS works by using statistical correlations between the RC4
+stream cipher and the key to "vote" on the probatility of specific bytes
+being at certain positions in the shared key. This allows for a more
+educated attack than brute force, in which keys are generated from high probability
+bytes and tested against the target AP. In basic WEP configurations the
+AP will NOT lock out the aircrack-ng instance, allowing this process to be
+completed fairly quickly. Aircrack FMS in progress shows the keys being
+tested.
+<span class="image centered"><img src="images/aircrack/aircrack-fms.png" alt=""></img></span>
+
+If everything has gone correctly to this point, you should get the key
+as a result:
+<span class="image centered"><img src="images/aircrack/success.png" alt=""></img></span>
 
 						</div>
 					</section>
