@@ -481,20 +481,13 @@
 		}
 
 /*********************************************************************************/
-/* Prism code stuff
+/* Code / pre 
 /*********************************************************************************/
-code, pre {
-	font-family: Consolas, Monaco, 'Andale Mono', 'Lucida Console', monospace;
-	hyphens: none;
-}
-
 pre {
-	max-height: 20em;
-}
-
-pre > code.highlight {
-	outline: .4em solid red;
-	outline-offset: .4em;
+	font-family: "Courier New", 'Consolas', Monaco, 'Andale Mono', 'Lucida Console', monospace;
+	hyphens: none;
+	text-align:left;
+	font-size: 1.5em;
 }
 
 /*********************************************************************************/
