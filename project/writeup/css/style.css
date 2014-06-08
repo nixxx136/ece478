@@ -42,11 +42,16 @@
 	{
 		font-weight: 200;
 		color: #666;
-		line-height: 1.5em;
+		line-height: 2em;
 		text-align:center;
 		margin-bottom: 1em;
 	}
-	
+
+	h1
+	{
+		font-size: 3em;
+	}
+
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
 		{
 			color: inherit;
@@ -202,7 +207,6 @@
 			{
 				width: 48px;
 				height: 48px;
-				background: #f00;
 			}
 			
 				.image.avatar48 img
@@ -1151,6 +1155,11 @@ pre {
 		}
 	
 		#main > section.four
+		{
+			background-color: #e8edec;
+		}
+
+		#main > section.five
 		{
 			background-color: #e8edec;
 		}

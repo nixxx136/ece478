@@ -41,7 +41,7 @@
 
 					<!-- Logo -->
 						<div id="logo">
-							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
+							<span class="image avatar48"><img src="images/wifi.png" alt="" /></span>
 							<h1 id="title">Wired Equivalent Privacy<h1>
               <span class="byline">Security Topics</span>
 						</div>
@@ -67,6 +67,7 @@
 								<li><a href="#protocol" id="protocol-link" class="skel-panels-ignoreHref"><span class="fa fa-exchange">Protocol</span></a></li>
 								<li><a href="#exploits" id="exploits-link" class="skel-panels-ignoreHref"><span class="fa fa-exclamation-triangle">Exploits</span></a></li>
 								<li><a href="#remedies" id="remedies-link" class="skel-panels-ignoreHref"><span class="fa fa-shield">Remedies</span></a></li>
+								<li><a href="#wpa" id="wpa-link" class="skel-panels-ignoreHref"><span class="fa fa-heart">WPA/WPA2</span></a></li>
 							</ul>
 						</nav>
 
@@ -96,9 +97,11 @@
 						<div class="container">
 
 							<header>
+								<h1>WEP is gone, but why?</h1>
 							</header>
 
 							<footer>
+								<h2>A breakdown of what WEP was and why it failed</h2
 							</footer>
 
 						</div>
@@ -306,10 +309,55 @@ as a result:
 								<h2>Remedies</h2>
 							</header>
 
+							<p>Before settling on a new standard several remedies were considered
+							for the issues involved in WEP.
+
+							<h3>WEPPlus</h3>
+
+							<p>WEPPlus was a proprietary enhancement to WEP put forward by
+							Agere Systems. WEPPlus avoids the usage of "weak IVs" that
+							are more likely to leak key information, with the additional
+							cost of both ends of a connection needing to support this
+							very limited scope standard.
+
+							<h3>DynamicWEP</h3>
+							DynamicWEP combined 802.1x technology with the Extensible
+							Authentication Protocol (EAP), which is still used for
+							some authentication schemes in more modern WPAx installations.
+							DynamicWEP uses an authentication token that allows changing
+							WEP keys dynamically, a feature that was picked up in 802.11i
+							as a part of TKIP but not ever officially a part of WEP, remaining
+							a vendor specific feature.
+
+							<h3>WEP2</h3>
+							WEP2 was designed for hardware incapable of supporting WPA/WPA2,
+							basically being a stopgap measure. WEP2 extends both the IV
+							and the key to 128-bits, dramatically increasing the key
+							space. WEP2 was never really produced since the entire
+							WEP algorithm was found to be secure, not just the IV-stream
+							correlation. Extending the key lengths was rolled into TKIP,
+							just like EAP.
+
+							<h3>Upgrade</h3>
+							The only real solution to WEP's inherent issues is to upgrade
+							per IEEE 802.11i to WPA or WPA2. Note that WPA has been broken
+							as well and WPA2 can be insecure in some instances, so even
+							this is not a perfect solution. However they are considerably
+							more difficult to crack
 						</div>
 					</section>
 
-			</div>
+					<section id="wpa" class="five">
+						<div class="container">
+
+							<header>
+								<h2>WPA/WPA2</h2>
+							</header>
+
+						</div>
+					</section>
+				</div>
+		<!-- Main -- >
 
 		<!-- Footer -->
 			<div id="footer">
