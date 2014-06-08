@@ -354,6 +354,37 @@ as a result:
 								<h2>WPA/WPA2</h2>
 							</header>
 
+							<h3>WPA</h3>
+
+							<p>WPA was an intermediate solution designed for hardware incapable
+							of supporting WPA2; basically WPA was a software implementable
+							solution designed to replace WEP. WPA is based on the
+							Temporary Key Integrity Protocol (TKIP), which has been replaced
+							by AES in WPA due to being partially broken and deprecated.
+
+							<h3>WPA2</h3>
+
+							<p>WPA2 is based on Robust Security Network (RSN), which provides
+							two new protocols: a four-way handshake and a group handshake.
+							In a four-way handshake, nonces--cryptographic numbers used
+							only once in a communication to keep originality of
+							messages intact--are exchanged along with Pairwise Transient Keys
+							(PTK), Groupwise Transient Keys (GTK) and Message Integrity
+							Codes (MIC).
+
+							<!-- TODO insert graphic here -->
+
+							<p>WPA2's group handshake is utilized when the network timer
+							expires, so the GTK needs to be updated. A two-way handshake
+							is utilized instead of a four-way handshake, effectively
+							the last two steps of the four-way handshake.
+
+							<p> WPA2 is generally secure, however it is important to note
+							that there are other attack vectors than just the security
+							method chosen. For example, routers that have WPS pin enabled
+							are nearly completely insecured even if they are using
+							WPA2.
+
 						</div>
 					</section>
 				</div>
