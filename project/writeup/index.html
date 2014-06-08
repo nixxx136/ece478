@@ -63,9 +63,10 @@
 							-->
 							<ul>
 								<li><a href="#top" id="top-link" class="skel-panels-ignoreHref"><span class="fa fa-cloud">Intro</span></a></li>
-								<li><a href="#background" id="portfolio-link" class="skel-panels-ignoreHref"><span class="fa fa-cogs">Background</span></a></li>
-								<li><a href="#exploits" id="about-link" class="skel-panels-ignoreHref"><span class="fa fa-exclamation-triangle">Exploits</span></a></li>
-								<li><a href="#remedies" id="contact-link" class="skel-panels-ignoreHref"><span class="fa fa-shield">Remedies</span></a></li>
+								<li><a href="#background" id="background-link" class="skel-panels-ignoreHref"><span class="fa fa-cogs">Background</span></a></li>
+								<li><a href="#protocol" id="protocol-link" class="skel-panels-ignoreHref"><span class="fa fa-exchange">Protocol</span></a></li>
+								<li><a href="#exploits" id="exploits-link" class="skel-panels-ignoreHref"><span class="fa fa-exclamation-triangle">Exploits</span></a></li>
+								<li><a href="#remedies" id="remedies-link" class="skel-panels-ignoreHref"><span class="fa fa-shield">Remedies</span></a></li>
 							</ul>
 						</nav>
 
@@ -106,17 +107,40 @@
 				<!-- Background -->
 					<section id="background" class="two">
 						<div class="container">
-
 							<header>
 								<h2>Background</h2>
 							</header>
-<pre class="prettyprint linenums">
-@import url(http://fonts.googleapis.com/css?family=Questrial);
 
-@import url(http://fonts.googleapis.com/css?family=Arvo);
-@font-face { src: url(http://lea.verou.me/logo.otf);
-font-family: 'LeaVerou'; }
-</pre>
+							Wired Equivalent Privacy (WEP) was introduced in September 1999
+							as a part of the original IEEE 802.11 standard. The purpose
+							of WEP was to provide data confidentiality similar to existing
+							wired networks.
+
+							<h3>WEP-x origins</h3>
+
+							The original standard was WEP-40; due to US government export
+							restrictions on cryptographic technology, the key size
+							was limited to 40-bits in the standard 64-bit WEP. In 2000, the
+							US government export restrictions were lifted and WEP-104, a
+							128-bit system, was introduced by hardware manufacturers.
+
+							<h3> Superceding of WEP </h3>
+							In 2003, the Wi-Fi Alliance announced that WEP had been superceded
+							by Wi-Fi Protected Access (WPA). In 2004, IEEE 802.11i introduced
+							WPA2 and deprecated both WEP-40 and WEP-104, stating that they
+							"fail to meet their security goals."
+
+						</div>
+					</section>
+
+				<!-- Protocol-->
+					<section id="protocol" class="three">
+						<div class="container">
+
+							<header>
+								<h2>Protocol</h2>
+							</header>
+
 						</div>
 					</section>
 
@@ -127,6 +151,59 @@ font-family: 'LeaVerou'; }
 							<header>
 								<h2>Exploits</h2>
 							</header>
+							<p>There are several attack vectors for WEP. Because it is based
+							on an RC4 stream cipher, the same traffic key cannot be reused
+							securely. The cipher is seeded with an IV--transmitted as plain
+							text--which is only 24 bits in the most common variation of WEP:
+							not enough to be secure on a busy network. For a 24-bit IV, there
+							is a 50 percent probability of repetition after only 5000 packets
+							due to the birthday principle. The way the IV is utilized also
+							opens WEP up to a related key attack, where a mathematical
+							relationship between keys can be known to the attacker.
+
+							<p>Other major issues include that the use of WEP is optional on
+							most routers, so many installations don't even bother using it
+							at all. Even if it is being used, the default implementation of
+							WEP uses a single shared key among users which leads to issues
+							dealing with compromises. Often compromises aren't dealt with at all.
+
+							<p>Most attacks deal with issues due to the RC4 stream cipher utilization
+							technique, but Bittau, Handley, and Lackey showed in 2006 that
+							the 802.11 protocol can be used to enable attacks against WEP
+							that weren't thought previously possible. Only a single packet
+							needs to be eavesdropped before bootstrapping to arbitrary data.
+
+							<h3>RC4 based exploits</h3>
+							<p>Most exploits are based on the RC4 stream itself. Fluhrer,
+							Mantin and Shamir (FMS) found correlations between the RC4
+							keystream, IV, and shared key allowing a passive, eavesdropping
+							based attack to recover the RC4 key. Depending on the
+							amount of traffic on the network successful key recovery can
+							take only a minute or so. A key element of this attack strategy
+							is to stimulate the server by injecting packets, causing more
+							traffic to be available to monitor them. This attack can be
+							done easily with consumer hardware.
+
+							<p>Improvements to FMS were made by Andreas Klein in 2005, showing
+							that there are additional correlations in the RC4 stream cipher
+							than FMS had found previously. This increases the ease of cracking
+							the cipher.
+
+							<p>Klein's attack was improved by Tews, Pychkine and Weinmann (TPW)
+							in 2007, extending the capability of this attack method. The
+							new implementation allows recovering a WEP-104 key with a
+							high probability of 50% with only 40,000 packets, reaching
+							95% probability with only 95,000 packets.
+
+							<h3>aircrack-ng suite</h3>
+
+<pre class="prettyprint linenums">
+@import url(http://fonts.googleapis.com/css?family=Questrial);
+
+@import url(http://fonts.googleapis.com/css?family=Arvo);
+@font-face { src: url(http://lea.verou.me/logo.otf);
+font-family: 'LeaVerou'; }
+</pre>
 
 						</div>
 					</section>
