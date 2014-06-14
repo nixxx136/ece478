@@ -43,7 +43,7 @@
 						<div id="logo">
 							<span class="image avatar48"><img src="images/wifi.png" alt="" /></span>
 							<h1 id="title">Wired Equivalent Privacy<h1>
-              <span class="byline">Security Topics</span>
+              				<span class="byline">Security Topics</span>
 						</div>
 
 					<!-- Nav -->
@@ -115,9 +115,9 @@
 							</header>
 
 							<p>Wired Equivalent Privacy (WEP) was introduced in September 1999
-							as a part of the original IEEE 802.11 standard. The purpose
+							as a part of the original <a href="http://en.wikipedia.org/wiki/IEEE_802.11" target="_blank">IEEE 802.11</a> standard. The purpose
 							of WEP was to provide data confidentiality similar to existing
-							wired networks.
+							wired networks.<sup><a href="#ref-1">1</a></sup>
 
 							<h3>WEP-x origins</h3>
 
@@ -132,7 +132,7 @@
 							<p>In 2003, the Wi-Fi Alliance announced that WEP had been superceded
 							by Wi-Fi Protected Access (WPA). In 2004, IEEE 802.11i introduced
 							WPA2 and deprecated both WEP-40 and WEP-104, stating that they
-							"fail to meet their security goals."
+							"fail to meet their security goals."<sup><a href="#ref-2">2</a></sup>
 
 						</div>
 					</section>
@@ -145,7 +145,7 @@
 								<h2>Protocol</h2>
 							</header>
 
-							<p>The RC4 stream cipher is used by WEP for confidentiality, and the CRC-32 checksum provides data integrity. For context, a stream cipher is a symmetric key cipher where plaintext digits are combined with a pseudorandom cipher digit stream (known as a keystream) to produce the wanted ciphertext. RC4 is a commonly used stream cipher and is widely used in such protocols as Transport Layer Security (TLS).</p>
+							<p>The RC4 stream cipher is used by WEP for confidentiality<sup><a href="#ref-3">3</a></sup>, and the CRC-32 checksum provides data integrity<sup><a href="#ref-4">4</a></sup>. For context, a stream cipher is a symmetric key cipher where plaintext digits are combined with a pseudorandom cipher digit stream (known as a keystream) to produce the wanted ciphertext. RC4 is a commonly used stream cipher and is widely used in such protocols as Transport Layer Security (TLS).</p>
 
 							<span class="image centered">
 								<img style="width: 60%;" src="images/RC4.png" alt="">
@@ -156,7 +156,7 @@
 
 							<span class="image centered"><img src="images/Wep-crypt-alt.png" alt=""></span>
 
-							<p>WEP comes in 3 flavors, WEP-40, WEP-104 and WEP-128. Each has a 24-bit IV, which only gives 2<sup>24</sup> = 16,777,216 possibilities. By birthday bounds this allows for a 50% chance of finding the correct IV by only guessing 2<sup>12</sup> = 4,096 24-bit combinations. This very small IV became one of the largest achillies heels of WEP</p>
+							<p>WEP comes in 3 flavors, WEP-40, WEP-104 and WEP-128. Each has a 24-bit IV, which only gives 2<sup>24</sup> = 16,777,216 possibilities. With a <a href="http://en.wikipedia.org/wiki/Birthday_attack" target="_blank">birthday attack</a> this allows for a 50% chance of finding the correct IV by only guessing 1.1774 * &radic;<span style="text-decoration: overline">2<sup>24</sup></span> ≈ 4,823 24-bit combinations. This very small IV became one of the largest achillies heels of WEP</p>
 
 							<p>Standard 64-bit WEP (IEEE 802.11, or WEP-40), consists of the 24-bit IV concatenated with a 40-bit key, or 10 hexadecimal digits. Once the US government lifted export restrictions on cryptographic technologies, then WEP-104 was introduced with a 104-bit key, or 26 hexadecimal digits. In an attempt to add further security, some vendors provided WEP-232, with a 232-bit key, or 58 hexadecimal digits. All of these flavors however, all suffered from an equally short 24-bit IV.</p>
 
@@ -176,7 +176,7 @@
 
 							<span class="image centered"><img style="width: 80%;" src="images/sharedkey.png" alt=""></span>
 
-							<p>At the face of it, shared key authentication seems like the more secure approach. However, the contrary is true, shared key authentication is more secure, because the keystream can be derived in shared key authentication by eavesdropping and collecting challenge frames sent between the WLAN client and the AP. Shared key was eventually deprecated in favor of WPA/WPA2.</p>
+							<p>At the face of it, shared key authentication seems like the more secure approach. However, the contrary is true, shared key authentication is more secure, because the keystream can be derived in shared key authentication by eavesdropping and collecting challenge frames sent between the WLAN client and the AP<sup><a href="#ref-5">5</a></sup>. Shared key was eventually deprecated in favor of WPA/WPA2.</p>
 
 						</div>
 					</section>
@@ -348,7 +348,7 @@ as a result:
 							<h3>WEPPlus</h3>
 
 							<p>WEPPlus was a proprietary enhancement to WEP put forward by
-							Agere Systems. WEPPlus avoids the usage of "weak IVs" that
+							Agere Systems. WEPPlus avoids the usage of "weak IVs"<sup><a href="#ref-6">6</a></sup> that
 							are more likely to leak key information, with the additional
 							cost of both ends of a connection needing to support this
 							very limited scope standard.
@@ -365,7 +365,7 @@ as a result:
 							<h3>WEP2</h3>
 							WEP2 was designed for hardware incapable of supporting WPA/WPA2,
 							basically being a stopgap measure. WEP2 extends both the IV
-							and the key to 128-bits, dramatically increasing the key
+							and the key to 128-bits<sup><a href="#ref-7">7</a></sup>, dramatically increasing the key
 							space. WEP2 was never really produced since the entire
 							WEP algorithm was found to be secure, not just the IV-stream
 							correlation. Extending the key lengths was rolled into TKIP,
@@ -412,11 +412,37 @@ as a result:
 							is utilized instead of a four-way handshake, effectively
 							the last two steps of the four-way handshake.
 
-							<p> WPA2 is generally secure, however it is important to note
+							<p> WPA2 is generally secure<sup><a href="#ref-8">8</a></sup>, however it is important to note
 							that there are other attack vectors than just the security
 							method chosen. For example, routers that have WPS pin enabled
 							are nearly completely insecured even if they are using
 							WPA2.
+
+						</div>
+					</section>
+
+					<section id="references" class="five">
+						<div class="container">
+
+							<header>
+								<h2>References</h2>
+							</header>
+
+							<a name="ref-1">[1]</a> <a href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?reload=true&arnumber=654749&isnumber=14251&punumber=5258&k2dockey=654749@ieeestds&query=%28802.11+1997%29%3Cin%3Emetadata&pos=0" target="_blank">802.11-1997  -  IEEE Standard for Information Technology- Telecommunications and Information Exchange Between Systems-Local and Metropolitan Area Networks-Specific Requirements-Part 11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications</a><br><br>
+
+							<a name="ref-2">[2]</a> <a href="http://standards.ieee.org/getieee802/download/802.11i-2004.pdf" target="_blank">IEEE 802.11i-2004</a><br><br>
+
+							<a name="ref-3">[3]</a> <a href="http://www.informit.com/guides/content.aspx?g=security&seqNum=85" target="_blank">WPA Part 2: Weak IV's</a><br><br>
+
+							<a name="ref-4">[4]</a> <a href="http://www.cs.umd.edu/~waa/attack/v3dcmnt.htm" target="_blank">An Inductive Chosen Plaintext Attack against WEP/WEP2</a><br><br>
+
+							<a name="ref-5">[5]</a> <a href="http://www.isaac.cs.berkeley.edu/isaac/mobicom.pdf" target="_blank">Intercepting Mobile Communications: The Insecurity of 802.11</a><br><br>
+
+							<a name="ref-6">[6]</a> <a href="http://www.thefreelibrary.com/Agere+Systems+is+First+to+Solve+Wireless+LAN+Wired+Equivalent+Privacy...-a079954213" target="_blank">Agere Systems is First to Solve Wireless LAN Wired Equivalent Privacy Security Issue; New Software Prevents Creation of Weak WEP Keys.</a><br><br>
+
+							<a name="ref-7">[7]</a> <a href="http://www.starkrealities.com/wireless003.html" target="_blank">WEP2, Credibility Zero</a><br><br>
+
+							<a name="ref-8">[8]</a> <a href="http://www.networkmagazineindia.com/200112/focus3.htm" target="_blank">802.11b Update: Stepping Up Your WLAN Security</a><br><br>
 
 						</div>
 					</section>
