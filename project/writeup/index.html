@@ -145,6 +145,39 @@
 								<h2>Protocol</h2>
 							</header>
 
+							<p>The RC4 stream cipher is used by WEP for confidentiality, and the CRC-32 checksum provides data integrity. For context, a stream cipher is a symmetric key cipher where plaintext digits are combined with a pseudorandom cipher digit stream (known as a keystream) to produce the wanted ciphertext. RC4 is a commonly used stream cipher and is widely used in such protocols as Transport Layer Security (TLS).</p>
+
+							<span class="image centered">
+								<img style="width: 60%;" src="images/RC4.png" alt="">
+								<p style="text-align: center;"><i>RC4 Lookup Stage, where S is a permutation of 256 possible bytes, i and j are two 8-bit index-pointers, and K is the keystream.</i></p>
+							</span>
+
+							<p>The WEP protocol consists of a 24-bit initialization vector (IV), which is pseudorandom, concatenated with a key to produce a seed for the RC4 stream cipher. Once the RC4 keystream is produced, it is XOR'd with the plaintext that is the target of encryption, and the cipher text is the result.</p>
+
+							<span class="image centered"><img src="images/Wep-crypt-alt.png" alt=""></span>
+
+							<p>WEP comes in 3 flavors, WEP-40, WEP-104 and WEP-128. Each has a 24-bit IV, which only gives 2<sup>24</sup> = 16,777,216 possibilities. By birthday bounds this allows for a 50% chance of finding the correct IV by only guessing 2<sup>12</sup> = 4,096 24-bit combinations. This very small IV became one of the largest achillies heels of WEP</p>
+
+							<p>Standard 64-bit WEP (IEEE 802.11, or WEP-40), consists of the 24-bit IV concatenated with a 40-bit key, or 10 hexadecimal digits. Once the US government lifted export restrictions on cryptographic technologies, then WEP-104 was introduced with a 104-bit key, or 26 hexadecimal digits. In an attempt to add further security, some vendors provided WEP-232, with a 232-bit key, or 58 hexadecimal digits. All of these flavors however, all suffered from an equally short 24-bit IV.</p>
+
+							<h3>Authentication</h3>
+
+							<p>WEP can be used with two different types of authentication, open system and shared key.</p>
+
+							<h4>Open System</h4>
+
+							<p>With open system, a WLAN client does not need to have any credentials, allowing any client to authenticate and attempt to associate using only a MAC. This effectively provides zero authentication, and after association, WEP keys can be used to encrypt subsequent data frames.</p>
+
+							<span class="image centered"><img style="width: 80%;" src="images/opensystem.png" alt=""></span>
+
+							<h4>Shared Key</h4>
+
+							<p>With shared key, the WLAN client and access point (AP) share a key and authenticate through a 4-step challenge and response handshake. The WLAN client starts by sending an authentication request to the AP, and the AP responds by sending back an unencrypted cleartext challenge. The WLAN client then encrypts the cleartext challenge using its shared key and sends it back to the AP. Once the AP receives the encrypted response, it decryptes the message with its shared key and compares the resulting cleartext to the original cleartext challenge. If the cleartexts both match, then the AP sends back a positive reply and the WLAN client is free to associate with the AP.</p>
+
+							<span class="image centered"><img style="width: 80%;" src="images/sharedkey.png" alt=""></span>
+
+							<p>At the face of it, shared key authentication seems like the more secure approach. However, the contrary is true, shared key authentication is more secure, because the keystream can be derived in shared key authentication by eavesdropping and collecting challenge frames sent between the WLAN client and the AP. Shared key was eventually deprecated in favor of WPA/WPA2.</p>
+
 						</div>
 					</section>
 
